@@ -2,7 +2,7 @@ plugins {
     kotlin("jvm") version "1.9.23"
 }
 
-group = "org.example"
+group = "com.leetcode-kotlin-wachi"
 version = "1.0-SNAPSHOT"
 
 repositories {
