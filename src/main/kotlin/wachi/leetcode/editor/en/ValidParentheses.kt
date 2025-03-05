@@ -58,25 +58,21 @@ package wachi.leetcode.editor.en
 //leetcode submit region begin(Prohibit modification and deletion)
 class Solution {
     fun isValid(s: String): Boolean {
-        var output = ""
-
+        val stack = ArrayDeque<String>()
         val closeBracketMap = hashMapOf(")" to "(", "}" to "{", "]" to "[")
 
-        for (i in s.indices) {
-            val newChar = s[i].toString()
-            if (output.isEmpty()) {
-                output += newChar
-            } else {
-                val lastChar = output.last().toString()
-                if (closeBracketMap[newChar] == lastChar) {
-                    output = output.dropLast(1)
-                } else {
-                    output += newChar
+        for (char in s) {
+            val charStr = char.toString()
+            if (charStr in closeBracketMap.values) {
+                stack.addLast(charStr)  // Push open brackets to the stack
+            } else if (charStr in closeBracketMap.keys) {
+                if (stack.isEmpty() || stack.removeLast() != closeBracketMap[charStr]) {
+                    return false  // Invalid if no matching open bracket
                 }
             }
         }
 
-        return output.isEmpty()
+        return stack.isEmpty()
     }
 }
 //leetcode submit region end(Prohibit modification and deletion)
