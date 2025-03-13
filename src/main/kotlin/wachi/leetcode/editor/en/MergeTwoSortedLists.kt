@@ -52,52 +52,16 @@ package wachi.leetcode.editor.en
  * }
  */
 class Solution {
-
     fun mergeTwoLists(list1: ListNode?, list2: ListNode?): ListNode? {
-        return mergeTwoLists(null, list1, list2)
-    }
+        if (list1 == null) return list2
+        if (list2 == null) return list1
 
-    private fun mergeTwoLists(mergedList: ListNode?, list1: ListNode?, list2: ListNode?): ListNode? {
-        return when {
-            list1 == null -> mergedList.let {
-                if (it == null) {
-                    list2
-                } else {
-                    it.next = list2
-                    mergedList
-                }
-            }
-
-            list2 == null -> mergedList.let {
-                if (it == null) {
-                    list1
-                } else {
-                    it.next = list1
-                    mergedList
-                }
-            }
-
-            list1.`val` <= list2.`val` -> mergedList.let {
-                if (it == null) {
-                    ListNode(list1.`val`).apply {
-                        mergeTwoLists(this, list1.next, list2)
-                    }
-                } else {
-                    it.next = ListNode(list1.`val`)
-                    mergeTwoLists(it.next, list1.next, list2)
-                }
-            }
-
-            else -> mergedList.let {
-                if (it == null) {
-                    ListNode(list2.`val`).apply {
-                        mergeTwoLists(this, list1, list2.next)
-                    }
-                } else {
-                    it.next = ListNode(list2.`val`)
-                    mergeTwoLists(it.next, list1, list2.next)
-                }
-            }
+        return if (list1.`val` <= list2.`val`) {
+            list1.next = mergeTwoLists(list1.next, list2)
+            list1
+        } else {
+            list2.next = mergeTwoLists(list1, list2.next)
+            list2
         }
     }
 }
